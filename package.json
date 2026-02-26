@@ -7,18 +7,18 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "concurrently \"pnpm --filter web dev\" \"pnpm --filter api dev\" \"pnpm --filter ml dev\"",
-    "dev:web": "pnpm --filter web dev",
-    "dev:api": "pnpm --filter api dev",
-    "dev:ml": "pnpm --filter ml dev",
-    "build": "pnpm --filter web build && pnpm --filter api build && pnpm --filter ml build",
+    "dev": "concurrently \"corepack pnpm --filter web dev\" \"corepack pnpm --filter api dev\" \"corepack pnpm --filter ml dev\"",
+    "dev:web": "corepack pnpm --filter web dev",
+    "dev:api": "corepack pnpm --filter api dev",
+    "dev:ml": "corepack pnpm --filter ml dev",
+    "build": "corepack pnpm --filter web build && corepack pnpm --filter api build && corepack pnpm --filter ml build",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
-    "db:migrate": "pnpm --filter api db:migrate",
-    "db:seed": "pnpm --filter api db:seed",
-    "ml:train": "pnpm --filter ml train",
-    "test": "pnpm --filter api test && pnpm --filter web test",
-    "lint": "pnpm -r lint"
+    "db:migrate": "corepack pnpm --filter api db:migrate",
+    "db:seed": "corepack pnpm --filter api db:seed",
+    "ml:train": "corepack pnpm --filter ml train",
+    "test": "corepack pnpm --filter api test && corepack pnpm --filter web test",
+    "lint": "corepack pnpm -r lint"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",

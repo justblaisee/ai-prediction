@@ -1,121 +1,94 @@
-# Inventory Intelligence - SaaS
+# Inventory Intelligence
 
-A production-minded SaaS application for inventory management with AI-powered demand forecasting.
+Inventory Intelligence is a full-stack SaaS application for inventory operations with demand forecasting, stockout alerts, and organization-level data isolation.
 
-## Features
+## Highlights
 
-- **Dashboard**: Real-time KPI monitoring with interactive charts
-- **Product Management**: Full CRUD operations for products
-- **Demand Prediction**: ML-powered forecasting using Prophet + XGBoost
-- **Alerts**: Automated stockout and low-stock notifications
-- **Multi-tenant**: Organization-based data isolation
-- **Authentication**: JWT-based auth with refresh tokens
+- Multi-tenant inventory platform with JWT auth and role-based access.
+- AI prediction workflow with training trigger and live training status polling.
+- Dashboard with KPI cards, category distribution, demand forecast, and alerts.
+- End-to-end local deployment via Docker Compose.
 
 ## Tech Stack
 
-- **Frontend**: Next.js 14, TypeScript, Tailwind CSS, shadcn/ui, Recharts, Framer Motion
-- **Backend**: Express.js, TypeScript, Prisma, PostgreSQL, Redis
-- **ML Service**: FastAPI, Prophet, XGBoost
-- **Infrastructure**: Docker, Docker Compose
+- Frontend: Next.js 14, TypeScript, React Query, Tailwind CSS, Recharts, Framer Motion
+- API: Express.js, TypeScript, Prisma, PostgreSQL, Redis
+- ML Service: FastAPI, Prophet, XGBoost (with fallback forecasting path)
+- Infra: Docker, Docker Compose
 
-## Quick Start
+## Monorepo Structure
+
+```text
+apps/
+  api/   # Express API + Prisma
+  ml/    # FastAPI forecasting service
+  web/   # Next.js frontend
+```
+
+## Quick Start (Docker)
 
 ### Prerequisites
 
-- Node.js 18+
-- pnpm 8+
-- Docker & Docker Compose
+- Docker Desktop
+- Node.js 18+ (optional for local non-docker dev)
+- pnpm 8+ (optional for local non-docker dev)
 
-### Setup & Run
+### Run
 
-1. **Install dependencies**:
-```
-bash
-pnpm install
-```
-
-2. **Start infrastructure**:
-```
-bash
-docker-compose up -d postgres redis
-```
-
-3. **Setup database**:
-```
-bash
-cd apps/api
-pnpm prisma generate
-pnpm prisma migrate dev
-pnpm db:seed
-```
-
-4. **Start all services**:
-```
-bash
-# Terminal 1 - Backend
-cd apps/api && pnpm dev
-
-# Terminal 2 - ML Service
-cd apps/ml && pnpm dev
-
-# Terminal 3 - Frontend
-cd apps/web && pnpm dev
-```
-
-Or use Docker:
-```
-bash
-docker-compose up -d
+```bash
+docker compose up -d --build
 ```
 
 ### Access
 
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:4000
-- **ML Service**: http://localhost:8000
+- Frontend: http://localhost:3001
+- API: http://localhost:4000
+- ML Service: http://localhost:8001
 
-### Default Credentials
+### Default Account
 
-- **Email**: admin@startup.test
-- **Password**: StartUp123!
-- **Organization**: Acme Corp
+- Email: `admin@startup.test`
+- Password: `StartUp123!`
+- Organization: `Acme Corp`
 
-## API Examples
+## Local Development (without Docker)
 
-### Login
-```
-bash
-curl -X POST http://localhost:4000/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"admin@startup.test","password":"StartUp123!"}'
+```bash
+corepack enable
+corepack pnpm install
 ```
 
-### Get Predictions
-```
-bash
-curl -X GET "http://localhost:4000/api/predictions/product/PRODUCT_ID?days=90" \
-  -H "Authorization: Bearer YOUR_TOKEN"
+```bash
+# terminal 1
+corepack pnpm --filter api dev
+
+# terminal 2
+corepack pnpm --filter ml dev
+
+# terminal 3
+corepack pnpm --filter web dev
 ```
 
-### Get Products
-```
-bash
-curl -X GET http://localhost:4000/api/products \
-  -H "Authorization: Bearer YOUR_TOKEN"
+## Useful Commands
+
+```bash
+# build all apps
+corepack pnpm build
+
+# seed default dataset
+corepack pnpm --filter api db:seed
+
+# add large demo dataset for portfolio screenshots
+corepack pnpm --filter api exec tsx prisma/seed-1000-products.ts
 ```
 
-## Project Structure
+## Portfolio Demo Flow
 
-```
-├── apps/
-│   ├── api/          # Express.js backend
-│   ├── ml/           # FastAPI ML service
-│   └── web/          # Next.js frontend
-├── packages/         # Shared packages
-├── infra/            # Docker configs
-├── docker-compose.yml
-└── README.md
-```
+1. Login with default account.
+2. Open `Products` to show inventory scale.
+3. Open `Predictions`, pick a product, click `Train Model`.
+4. Show live training status (`running/completed/failed`) and resulting forecast chart.
+5. Open `Dashboard` and `Alerts` to explain business value.
 
 ## License
 

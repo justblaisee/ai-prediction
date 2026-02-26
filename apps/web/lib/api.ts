@@ -79,7 +79,7 @@ export const productsApi = {
   create: (data: any) => api.post('/products', data),
   update: (id: string, data: any) => api.patch(`/products/${id}`, data),
   delete: (id: string) => api.delete(`/products/${id}`),
-  getCategories: () => api.get('/products/meta/categories'),
+  getCategories: () => api.get('/products/categories/all'),
 };
 
 // Transactions API
