@@ -2,11 +2,13 @@
 
 This is a new Expo-based mobile client for Inventory AI.
 
-## Features (v1)
+## Features (v2)
 
+- Bottom-tab navigation: Dashboard, Products, Predictions, Profile
+- Mobile dashboard cards + mini bar chart for top stock items
 - Login with existing API credentials
 - Token persistence with `expo-secure-store`
-- Product list preview
+- Product list with search + selection state
 - Trigger model training
 - Live training status polling (`idle/running/completed/failed`)
 
