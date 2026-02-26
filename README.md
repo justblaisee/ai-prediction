@@ -45,6 +45,11 @@ docker compose up -d --build
 - API: http://localhost:4000
 - ML Service: http://localhost:8001
 
+## Live Demo
+
+- GitHub Pages (frontend): `https://justblaisee.github.io/ai-prediction/`
+- Note: interactive features still require reachable API/ML endpoints.
+
 ### Default Account
 
 - Email: `admin@startup.test`
