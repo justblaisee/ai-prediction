@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "Inventory AI Mobile",
+    "slug": "inventory-ai-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {},
+    "extra": {
+      "apiUrl": "http://127.0.0.1:4000"
+    }
+  }
+}
