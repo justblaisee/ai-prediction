@@ -1,5 +1,8 @@
 # Inventory Intelligence
 
+[![Live Demo](https://img.shields.io/badge/Live-Demo-2ea44f?style=for-the-badge&logo=githubpages&logoColor=white)](https://justblaisee.github.io/ai-prediction/)
+[![Deploy Web To GitHub Pages](https://img.shields.io/github/actions/workflow/status/justblaisee/ai-prediction/deploy-pages.yml?branch=master&style=for-the-badge&label=Pages%20Deploy)](https://github.com/justblaisee/ai-prediction/actions/workflows/deploy-pages.yml)
+
 Inventory Intelligence is a full-stack SaaS application for inventory operations with demand forecasting, stockout alerts, and organization-level data isolation.
 
 ## Highlights
