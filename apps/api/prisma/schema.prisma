@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users        User[]
+  products     Product[]
+  transactions Transaction[]
+  alerts       Alert[]
+
+  @@map("organizations")
+}
+
+model User {
+  id             String         @id @default(uuid())
+  email          String         @unique
+  password       String
+  firstName      String
+  lastName       String
+  role           Role           @default(STAFF)
+  organizationId String
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  refreshToken   String?
+
+  @@unique([email, organizationId])
+  @@map("users")
+}
+
+model Product {
+  id             String         @id @default(uuid())
+  sku            String
+  name           String
+  description    String?
+  currentStock  Int            @default(0)
+  minThreshold   Int            @default(10)
+  leadTimeDays   Int            @default(7)
+  unitPrice      Decimal       @default(0) @db.Decimal(10, 2)
+  category       String?
+  organizationId String
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  transactions   Transaction[]
+  predictions    Prediction[]
+  alerts         Alert[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@unique([sku, organizationId])
+  @@map("products")
+}
+
+model Transaction {
+  id         String    @id @default(uuid())
+  date       DateTime  @db.Date
+  type       TransactionType
+  quantity   Int
+  unitPrice  Decimal   @db.Decimal(10, 2)
+  promoFlag  Boolean   @default(false)
+  notes      String?
+  productId  String
+  product    Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  organizationId String
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt  DateTime  @default(now())
+
+  @@index([productId, date])
+  @@map("transactions")
+}
+
+model Prediction {
+  id            String    @id @default(uuid())
+  productId     String
+  product       Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  predictedDate DateTime  @db.Date
+  predictedQty  Float
+  confidenceMin Float?
+  confidenceMax Float?
+  modelType     String    @default("prophet")
+  createdAt     DateTime  @default(now())
+
+  @@unique([productId, predictedDate])
+  @@map("predictions")
+}
+
+model Alert {
+  id            String      @id @default(uuid())
+  type          AlertType
+  severity      AlertSeverity @default(WARNING)
+  message       String
+  productId     String?
+  product       Product?    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  isRead        Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+
+  @@map("alerts")
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  STAFF
+}
+
+enum TransactionType {
+  SALE
+  PURCHASE
+  ADJUSTMENT
+  RETURN
+}
+
+enum AlertType {
+  STOCKOUT
+  LOW_STOCK
+  EXPIRED
+  PREDICTION
+}
+
+enum AlertSeverity {
+  INFO
+  WARNING
+  CRITICAL
+}

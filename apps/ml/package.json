@@ -1,0 +1,12 @@
+{
+  "name": "ml",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "uvicorn main:app --reload --host 0.0.0.0 --port 8000",
+    "train": "python -m scripts.train",
+    "start": "uvicorn main:app --host 0.0.0.0 --port 8000",
+    "test": "pytest"
+  }
+
+}
