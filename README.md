@@ -26,7 +26,6 @@ apps/
   api/   # Express API + Prisma
   ml/    # FastAPI forecasting service
   web/   # Next.js frontend
-  mobile/ # Expo React Native app (portfolio v1)
 ```
 
 ## Quick Start (Docker)
