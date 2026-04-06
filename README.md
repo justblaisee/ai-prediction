@@ -98,4 +98,4 @@ corepack pnpm --filter api exec tsx prisma/seed-1000-products.ts
 4. Show live training status (`running/completed/failed`) and resulting forecast chart.
 5. Open `Dashboard` and `Alerts` to explain business value.
 
-[![Statistik GitHub Anda](https://github-readme-stats.vercel.app/api?username=justblaisee&show_icons=true&theme=radical)](https://github.com/anuraghazra/github-readme-stats)
+[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=justblaisee)](https://github.com/anuraghazra/github-readme-stats)
